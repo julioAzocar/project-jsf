@@ -3,16 +3,48 @@
       xmlns:h="http://java.sun.com/jsf/html">
 <h:head>
 	<title>Pantalla Principal</title>
+	<h:outputStylesheet library="css" name="misEstilos.css"></h:outputStylesheet>
+
 </h:head>
 
 <h:body>
       
-      	<h:outputLabel value="bienvenido al Principal"></h:outputLabel>
       	<h:form id="formPrincipal">
-      		<h:panelGrid columns="2">
-      			<h:outputLabel value="Usuario: *" styleClass="formLabelText"> </h:outputLabel>
 
-      		</h:panelGrid>
+			<h:outputLabel value="#{principalController.var1}"></h:outputLabel>
+			
+			 
+			<h:dataTable id="tblEmpleados" headerClass="headerTable" rowClasses="rowTable rowTableLine"
+			var="empleado"
+			value="#{principalController.empleados}" >
+				<h:column>
+				<f:facet name="header">Nombre</f:facet>
+				<h:outputText value="#{empleado.nombre}" />
+				</h:column>
+				
+				<h:column>
+				<f:facet name="header">Primer Apellido</f:facet>
+				<h:outputText value="#{empleado.primerApellido}" />
+				</h:column>
+				
+				<h:column>
+				<f:facet name="header">Segundo Apellido</f:facet>
+				<h:outputText value="#{empleado.segundoApelllido}" />
+				</h:column>
+				
+				<h:column>
+				<f:facet name="header">Puesto</f:facet>
+				<h:outputText value="#{empleado.puesto}" />
+				</h:column>
+				
+				<h:column>
+				<f:facet name="header">Estatus</f:facet>	
+				<h:outputText value="ACTIVO" rendered="#{empleado.status}"/>
+				<h:outputText value="INACTIVO" rendered="#{!empleado.status}"/>
+				</h:column>
+				
+			</h:dataTable>
+ 			
 		</h:form>
 		
 		
