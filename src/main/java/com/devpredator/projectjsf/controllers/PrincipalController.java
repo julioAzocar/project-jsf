@@ -13,6 +13,8 @@ import com.devpredator.projectjsf.services.EmpleadoService;
 @ViewScoped //mantiene informacion en page
 public class PrincipalController {
 	private List<Empleado> empleados;
+	private List<Empleado> empleadosFiltrados;
+	
 	private EmpleadoService empleadoService = new EmpleadoService();
 	private String var1;
 	
@@ -50,5 +52,15 @@ public class PrincipalController {
 
 	public void setVar1(String var1) {
 		this.var1 = var1;
+	}
+
+
+	public List<Empleado> getEmpleadosFiltrados() {
+		return empleadosFiltrados;
+	}
+
+
+	public void setEmpleadosFiltrados(List<Empleado> empleadosFiltrados) {
+		this.empleadosFiltrados = empleadosFiltrados;
 	}
 }

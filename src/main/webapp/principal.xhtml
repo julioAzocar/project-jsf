@@ -5,46 +5,96 @@
 <h:head>
 	<title>Pantalla Principal</title>
 	<h:outputStylesheet library="css" name="misEstilos.css"></h:outputStylesheet>
-
+ <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+ 
 </h:head>
 
 <h:body>
       
       	<h:form id="formPrincipal">
 
-			<h:outputLabel value="#{principalController.var1}"></h:outputLabel>
+			<p:commandButton value="Cerrar Sesion" action="#{sessionCerrarController.cerrarSesion}"
+			styleClass="p-mr-2 p-mb-2">
+            
+            </p:commandButton>
+            
+			<h:outputLabel 
+			value="Bienvenidos #{sessionController.usuarioDTO.usuario} a la pantalla principal"
+			></h:outputLabel>
 			
-			 
-			<h:dataTable id="tblEmpleados" headerClass="headerTable" rowClasses="rowTable rowTableLine"
+        
+			<p:commandButton ajax="false" value="XLS" styleClass="p-mr-2 p-mb-2">
+                    <p:dataExporter type="xls" target=":formPrincipal:tblEmpleados" fileName="products"/>
+            </p:commandButton>
+                
+			<p:dataTable id="tblEmpleados"
 			var="empleado"
-			value="#{principalController.empleados}" >
-				<h:column>
-				<f:facet name="header">Nombre</f:facet>
+			value="#{principalController.empleados}" 
+			paginator="true" rows="10"
+            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+            currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
+            rowsPerPageTemplate="5,10,{ShowAll|'All'}"
+            emptyMessage="Sin Datos" paginatorPosition="bottom"
+            filteredValue="#{principalController.empleadosFiltrados}"
+            reflow="true">
+            
+            
+			<f:facet name="{Exporters}">
+
+                <p:commandLink ajax="false">
+                	<p:graphicImage name="imgs/excel.png" width="24"/>
+                    <p:dataExporter type="xls" target="tblEmpleados" fileName="Empleados"/>
+                </p:commandLink>
+
+                <p:commandLink ajax="false">
+                	<p:graphicImage name="imgs/xlsx.png" width="24"/>
+                    <p:dataExporter type="xlsxstream" target="tblEmpleados" fileName="Empleados"/>
+                </p:commandLink>
+
+                <p:commandLink ajax="false">
+                	<p:graphicImage name="imgs/pdf.png" width="24"/>
+                    <p:dataExporter type="pdf" target="tblEmpleados" fileName="Empleados"/>
+                </p:commandLink>
+
+                <p:commandLink ajax="false">
+                	<p:graphicImage name="imgs/csv.png" width="24"/>
+                    <p:dataExporter type="csv" target="tblEmpleados" fileName="Empleados" />
+                </p:commandLink>
+
+                <p:commandLink ajax="false">
+                	<p:graphicImage name="imgs/xml.png" width="24"/>
+                    <p:dataExporter type="xml" target="tblEmpleados" fileName="Empleados"/>
+                </p:commandLink>
+
+                <p:commandLink ajax="false">
+                	<p:graphicImage name="imgs/txt.png" width="24"/>
+                    <p:dataExporter type="txt" target="tblEmpleados" fileName="Empleados"/>
+                </p:commandLink>
+			</f:facet>
+		
+				<p:column headerText="Nombre" filterBy="#{empleado.nombre}" filterMachMode="contains" sortBy="#{empleado.nombre}">
+				<!--<f:facet name="header">Nombre</f:facet>-->
 				<h:outputText value="#{empleado.nombre}" />
-				</h:column>
+				</p:column>
 				
-				<h:column>
-				<f:facet name="header">Primer Apellido</f:facet>
+				<p:column headerText="Primer Apellido" filterBy="#{empleado.primerApellido}" filterMachMode="contains" sortBy="#{empleado.primerApellido}">
 				<h:outputText value="#{empleado.primerApellido}" />
-				</h:column>
+				</p:column>
 				
-				<h:column>
-				<f:facet name="header">Segundo Apellido</f:facet>
+				<p:column headerText="Segundo Apellido" filterBy="#{empleado.segundoApelllido}" filterMachMode="contains" sortBy="#{empleado.segundoApelllido}">
 				<h:outputText value="#{empleado.segundoApelllido}" />
-				</h:column>
+				</p:column>
 				
-				<h:column>
-				<f:facet name="header">Puesto</f:facet>
+				<p:column headerText="Puesto" filterBy="#{empleado.puesto}" filterMachMode="contains" sortBy="#{empleado.puesto}">
 				<h:outputText value="#{empleado.puesto}" />
-				</h:column>
+				</p:column>
 				
-				<h:column>
-				<f:facet name="header">Estatus</f:facet>	
+				<p:column headerText="Estatus">	
 				<h:outputText value="ACTIVO" rendered="#{empleado.status}"/>
 				<h:outputText value="INACTIVO" rendered="#{!empleado.status}"/>
-				</h:column>
-				
-			</h:dataTable>
+				</p:column>
+			
+			</p:dataTable>
  			
 		</h:form>
 		
